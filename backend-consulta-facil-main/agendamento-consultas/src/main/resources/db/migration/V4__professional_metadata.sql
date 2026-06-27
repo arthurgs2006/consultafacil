@@ -1,0 +1,2 @@
+ALTER TABLE users ADD COLUMN professional_registration VARCHAR(100);
+ALTER TABLE users ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;
