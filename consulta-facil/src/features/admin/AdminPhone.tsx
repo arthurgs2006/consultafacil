@@ -2,7 +2,6 @@ import { BarChart2, FileBarChart, LayoutDashboard, Plus, Settings, Shield, UserP
 import { useState, type FormEvent } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { BottomNav } from '../../components/BottomNav'
-import { PhoneFrame } from '../../components/PhoneFrame'
 import { StatusBadge } from '../../components/StatusBadge'
 import { useApp } from '../../context/AppContext'
 import { formatDate } from '../../utils/date'
@@ -158,7 +157,7 @@ export function AdminPhone() {
   )
 
   return (
-    <PhoneFrame label="Admin — Painel">
+    <main className="app-screen">
       <header className="admin-header">
         <div><small>Painel administrativo</small><strong>ConsultaFácil</strong></div>
         <span aria-hidden="true"><Shield /></span>
@@ -200,6 +199,6 @@ export function AdminPhone() {
             : 'Config.'
         }
       />
-    </PhoneFrame>
+    </main>
   )
 }

@@ -20,24 +20,21 @@ function AppContent() {
     return <LandingPage onStart={() => setScreen('login')} />
   }
 
-  const currentArea = screen === 'patient'
-    ? <PatientPhone />
-    : screen === 'professional'
-      ? <ProfessionalPhone />
-      : screen === 'admin'
-        ? <AdminPhone />
-        : <AuthPhone onLogin={setScreen} />
+  const handleLogout = () => { logout(); setScreen('home') }
+
+  if (screen === 'login') {
+    return <AuthPhone onLogin={setScreen} />
+  }
 
   return (
-    <main className="app-flow">
-      <header className="app-flow__header">
-        <button onClick={() => { if (screen !== 'login') logout(); setScreen('home') }}>
-          <LogOut />
-          {screen === 'login' ? 'Voltar ao início' : 'Sair'}
-        </button>
-      </header>
-      {currentArea}
-    </main>
+    <>
+      <button className="logout-fab" onClick={handleLogout} aria-label="Sair">
+        <LogOut />
+      </button>
+      {screen === 'patient' && <PatientPhone />}
+      {screen === 'professional' && <ProfessionalPhone />}
+      {screen === 'admin' && <AdminPhone />}
+    </>
   )
 }
 

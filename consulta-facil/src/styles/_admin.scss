@@ -1,25 +1,48 @@
 @use 'variables' as *;
-.admin-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding: 52px 18px 13px; background: white; > div { display: flex; flex-direction: column; } small { color: $muted; font-size: 10px; } strong { margin-top: 2px; font-size: 15px; } > span { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: white; background: linear-gradient(135deg,#f43f5e,#fb923c); svg { width: 20px; } } }
-.admin-content { padding: 15px 15px 86px; }
-.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; > div { display: flex; flex-direction: column; align-items: center; border-radius: 15px; padding: 13px 5px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); &:nth-child(1) strong { color: $primary; } &:nth-child(2) strong { color: #2563eb; } &:nth-child(3) strong { color: #ef4444; } } strong { font-size: 22px; } small { margin-top: 3px; color: $muted; font-size: 9px; } }
-.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; button { display: flex; align-items: flex-start; flex-direction: column; border-radius: 16px; padding: 14px; color: white; text-align: left; background: $primary; &:last-child { background: #2563eb; } svg { width: 19px; } strong { margin-top: 7px; font-size: 11px; } small { margin-top: 2px; opacity: .72; font-size: 8px; } } }
-.admin-content .section-heading { .button { padding: 6px 9px; } }
-.professional-form { display: flex; flex-direction: column; gap: 8px; h3 { font-size: 12px; } label { color: $muted; font-size: 10px; font-weight: 700; } input { margin-top: 4px; padding: 9px; font-size: 11px; } > div { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; } }
-.admin-doctors { margin-top: 10px; > article { display: flex; align-items: center; gap: 9px; margin-top: 7px; border-radius: 12px; padding: 9px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.04); > div { display: flex; min-width: 0; flex: 1; flex-direction: column; } strong { overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; } small { margin-top: 2px; color: $muted; font-size: 9px; } > button { color: $danger; background: none; font-size: 9px; font-weight: 700; } } }
-.professional-status { align-self: flex-start; margin-top: 4px; border-radius: 99px; padding: 2px 6px; font-size: 8px; font-weight: 700; &--active { color: #15803d; background: #f0fdf4; } &--inactive { color: #64748b; background: #f1f5f9; } }
-.admin-appointments { margin-top: 17px; > .section-title { margin-bottom: 10px; } .filters { select { flex: 1; } .button { padding: 4px 9px; } } }
-.admin-appointment { display: flex; align-items: flex-start; justify-content: space-between; margin-top: 8px; border-radius: 15px; padding: 11px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); > div { display: flex; flex-direction: column; } strong { font-size: 11px; } em { margin-top: 2px; color: $primary; font-size: 9px; font-style: normal; font-weight: 600; } small { margin-top: 2px; color: #94a3b8; font-size: 9px; } button { align-self: flex-start; margin-top: 6px; padding: 0; color: $danger; background: none; font-size: 9px; font-weight: 700; } }
 
-@media (min-width: 701px) {
-  .phone__screen--fluid .admin-header { padding: 18px clamp(30px, 5vw, 70px); }
-  .phone__screen--fluid .admin-content { width: min(1180px, calc(100% - 60px)); margin: 0 auto; padding: 30px 0 70px; }
-  .phone__screen--fluid .stats { gap: 18px; }
-  .phone__screen--fluid .stats > div { padding: 22px; }
-  .phone__screen--fluid .quick-actions { gap: 18px; }
-  .phone__screen--fluid .quick-actions button { min-height: 125px; padding: 24px; }
-  .phone__screen--fluid .professional-form { max-width: 620px; }
-  .phone__screen--fluid .admin-doctors { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .phone__screen--fluid .admin-doctors > article { margin: 0; padding: 14px; }
-  .phone__screen--fluid .admin-appointments { margin-top: 30px; }
-  .phone__screen--fluid .admin-appointment { padding: 16px; }
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 16px 16px 13px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  background: white;
+
+  > div { display: flex; flex-direction: column; }
+  small { color: $muted; font-size: 10px; }
+  strong { margin-top: 2px; font-size: 15px; }
+  > span { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: white; background: linear-gradient(135deg,#f43f5e,#fb923c); svg { width: 20px; } }
+}
+
+.admin-content { padding: 15px 15px 80px; }
+
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; > div { display: flex; flex-direction: column; align-items: center; border-radius: 15px; padding: 13px 5px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); &:nth-child(1) strong { color: $primary; } &:nth-child(2) strong { color: #2563eb; } &:nth-child(3) strong { color: #ef4444; } } strong { font-size: 22px; } small { margin-top: 3px; color: $muted; font-size: 9px; } }
+
+.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; button { display: flex; align-items: flex-start; flex-direction: column; border-radius: 16px; padding: 14px; color: white; text-align: left; background: $primary; min-height: 80px; &:last-child { background: #2563eb; } svg { width: 19px; } strong { margin-top: 7px; font-size: 11px; } small { margin-top: 2px; opacity: .72; font-size: 8px; } } }
+
+.admin-content .section-heading { .button { padding: 6px 9px; } }
+
+.professional-form { display: flex; flex-direction: column; gap: 8px; h3 { font-size: 12px; } label { color: $muted; font-size: 10px; font-weight: 700; } input { margin-top: 4px; padding: 9px; font-size: 11px; } > div { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; } }
+
+.admin-doctors { margin-top: 10px; > article { display: flex; align-items: center; gap: 9px; margin-top: 7px; border-radius: 12px; padding: 9px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.04); > div { display: flex; min-width: 0; flex: 1; flex-direction: column; } strong { overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; } small { margin-top: 2px; color: $muted; font-size: 9px; } > button { color: $danger; background: none; font-size: 9px; font-weight: 700; min-height: 44px; } } }
+
+.professional-status { align-self: flex-start; margin-top: 4px; border-radius: 99px; padding: 2px 6px; font-size: 8px; font-weight: 700; &--active { color: #15803d; background: #f0fdf4; } &--inactive { color: #64748b; background: #f1f5f9; } }
+
+.admin-appointments { margin-top: 17px; > .section-title { margin-bottom: 10px; } .filters { select { flex: 1; } .button { padding: 4px 9px; } } }
+
+.admin-appointment { display: flex; align-items: flex-start; justify-content: space-between; margin-top: 8px; border-radius: 15px; padding: 11px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); > div { display: flex; flex-direction: column; } strong { font-size: 11px; } em { margin-top: 2px; color: $primary; font-size: 9px; font-style: normal; font-weight: 600; } small { margin-top: 2px; color: #94a3b8; font-size: 9px; } button { align-self: flex-start; margin-top: 6px; padding: 0; color: $danger; background: none; font-size: 9px; font-weight: 700; min-height: 44px; } }
+
+@media (min-width: 768px) {
+  .admin-header { padding: 18px clamp(30px, 5vw, 70px); }
+  .admin-content { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 30px 0 70px; }
+  .stats { gap: 18px; }
+  .stats > div { padding: 22px; }
+  .quick-actions { gap: 18px; }
+  .quick-actions button { min-height: 125px; padding: 24px; }
+  .professional-form { max-width: 620px; }
+  .admin-doctors { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .admin-doctors > article { margin: 0; padding: 14px; }
+  .admin-appointments { margin-top: 30px; }
+  .admin-appointment { padding: 16px; }
 }

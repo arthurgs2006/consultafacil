@@ -2,7 +2,6 @@ import { BarChart2, CalendarDays, Search, Settings, Users } from 'lucide-react'
 import { useState } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { BottomNav } from '../../components/BottomNav'
-import { PhoneFrame } from '../../components/PhoneFrame'
 import { StatusBadge } from '../../components/StatusBadge'
 import { useApp } from '../../context/AppContext'
 import { ALL_SLOTS } from '../../data/mockData'
@@ -112,7 +111,7 @@ export function ProfessionalPhone() {
   )
 
   return (
-    <PhoneFrame label="Profissional — Agenda">
+    <main className="app-screen">
       <header className="professional-header"><div><Avatar initials={professional?.initials ?? 'PR'} color="blue" /><span><small>Profissional</small><strong>{session?.name}</strong></span></div><em>{professional?.specialty}</em></header>
       <main className="professional-content">
         {activeTab === 'agenda' && agendaPane}
@@ -121,6 +120,6 @@ export function ProfessionalPhone() {
         {activeTab === 'config' && configPane}
       </main>
       <BottomNav items={[{ label: 'Agenda', icon: CalendarDays, onClick: () => setActiveTab('agenda') }, { label: 'Pacientes', icon: Users, onClick: () => setActiveTab('patients') }, { label: 'Relatórios', icon: BarChart2, onClick: () => setActiveTab('reports') }, { label: 'Config.', icon: Settings, onClick: () => setActiveTab('config') }]} activeLabel={activeTab === 'agenda' ? 'Agenda' : activeTab === 'patients' ? 'Pacientes' : activeTab === 'reports' ? 'Relatórios' : 'Config.'} />
-    </PhoneFrame>
+    </main>
   )
 }

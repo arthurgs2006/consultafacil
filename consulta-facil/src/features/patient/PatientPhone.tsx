@@ -2,7 +2,6 @@ import { Bell, BellRing, Bone, Brain, Clock, HeartPulse, Home, Search, Smile, Us
 import { useRef, useState } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { BottomNav } from '../../components/BottomNav'
-import { PhoneFrame } from '../../components/PhoneFrame'
 import { useApp } from '../../context/AppContext'
 import { DoctorCard } from './DoctorCard'
 import { HistoryPanel } from './HistoryPanel'
@@ -38,7 +37,7 @@ export function PatientPhone() {
   const nextDoctor = doctors.find(({ id }) => id === nextAppointment?.doctorId)
 
   return (
-    <PhoneFrame label="Paciente — Início & Agendamento">
+    <main className="app-screen">
       <header className="patient-header">
         <div><Avatar initials={(session?.name ?? 'Paciente').split(' ').map((part) => part[0]).slice(0, 2).join('')} size="small" /><span><small>Olá, paciente</small><strong>{session?.name}</strong></span></div>
         <button className="icon-button notification" aria-label="Notificações" onClick={() => setNotificationsOpen(true)}><Bell /></button>
@@ -86,6 +85,6 @@ export function PatientPhone() {
           </section>
         </div>
       )}
-    </PhoneFrame>
+    </main>
   )
 }
