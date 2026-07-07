@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck2, HeartPulse, ShieldCheck, Stethoscope } from 'lucide-react'
+import { ArrowRight, BadgeCheck, BellRing, CalendarCheck2, HeartPulse, ShieldCheck, Stethoscope, Zap } from 'lucide-react'
 
 export function LandingPage({ onStart }: { onStart: () => void }) {
   return (
@@ -19,7 +19,6 @@ export function LandingPage({ onStart }: { onStart: () => void }) {
           <button className="landing__cta" onClick={onStart}>
             Entrar no ConsultaFácil <ArrowRight />
           </button>
-          <small>Ambiente demonstrativo — nenhuma credencial real é necessária.</small>
         </div>
 
         <div className="landing__visual" aria-hidden="true">
@@ -32,6 +31,24 @@ export function LandingPage({ onStart }: { onStart: () => void }) {
             <div><strong>Seus dados protegidos</strong><p>Controle e praticidade para sua saúde.</p></div>
           </div>
         </div>
+      </section>
+
+      <section className="landing__benefits" aria-label="Vantagens do ConsultaFácil">
+        <article>
+          <span><Zap /></span>
+          <strong>Agendamento rápido</strong>
+          <p>Escolha profissional, data e horário em poucos toques.</p>
+        </article>
+        <article>
+          <span><BadgeCheck /></span>
+          <strong>Profissionais verificados</strong>
+          <p>Especialidade e registro conferidos na plataforma.</p>
+        </article>
+        <article>
+          <span><BellRing /></span>
+          <strong>Lembretes automáticos</strong>
+          <p>Você recebe um aviso antes de cada consulta.</p>
+        </article>
       </section>
     </main>
   )

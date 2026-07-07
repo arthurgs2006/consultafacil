@@ -18,6 +18,16 @@ import java.util.List;
 @Configuration
 public class DemoDataConfig {
 
+    private record ProfissionalSeed(String nome, String email, String especialidade, String registro) {}
+
+    private static final List<ProfissionalSeed> PROFISSIONAIS_DEMO = List.of(
+            new ProfissionalSeed("Dra. Ana Souza", "ana@consultafacil.com", "Cardiologia", "CRM-SP 184521"),
+            new ProfissionalSeed("Dr. Carlos Lima", "carlos@consultafacil.com", "Neurologia", "CRM-SP 207842"),
+            new ProfissionalSeed("Dra. Beatriz Oliveira", "beatriz@consultafacil.com", "Odontologia", "CRO-SP 98214"),
+            new ProfissionalSeed("Dra. Juliana Martins", "juliana@consultafacil.com", "Psicologia", "CRP 06/148721"),
+            new ProfissionalSeed("Dr. Rafael Costa", "rafael@consultafacil.com", "Fisioterapia", "CREFITO-3 312845-F")
+    );
+
     @Bean
     @ConditionalOnProperty(name = "app.seed-demo", havingValue = "true")
     ApplicationRunner seedDemoData(
@@ -30,24 +40,31 @@ public class DemoDataConfig {
                     Papel.ADMIN, null, null);
             criarUsuarioSeAusente(usuarios, passwordEncoder, "Maria Silva", "maria@consultafacil.com",
                     Papel.PACIENTE, null, null);
-            Usuario profissional = criarUsuarioSeAusente(usuarios, passwordEncoder, "Dra. Ana Souza",
-                    "ana@consultafacil.com", Papel.PROFISSIONAL, "Cardiologia", "CRM-SP 184521");
 
-            if (horarios.findByProfissional(profissional).isEmpty()) {
-                LocalDate primeiroDia = LocalDate.now().plusDays(1);
-                for (int dia = 0; dia < 5; dia++) {
-                    LocalDate data = primeiroDia.plusDays(dia);
-                    for (int hora : List.of(9, 10, 11, 14, 15, 16)) {
-                        horarios.save(Horario.builder()
-                                .profissional(profissional)
-                                .data(data)
-                                .horaInicio(LocalTime.of(hora, 0))
-                                .horaFim(LocalTime.of(hora + 1, 0))
-                                .build());
-                    }
-                }
+            for (ProfissionalSeed seed : PROFISSIONAIS_DEMO) {
+                Usuario profissional = criarUsuarioSeAusente(usuarios, passwordEncoder, seed.nome(), seed.email(),
+                        Papel.PROFISSIONAL, seed.especialidade(), seed.registro());
+                seedHorarios(horarios, profissional);
             }
         };
+    }
+
+    private void seedHorarios(HorarioRepository horarios, Usuario profissional) {
+        if (!horarios.findByProfissional(profissional).isEmpty()) {
+            return;
+        }
+        LocalDate primeiroDia = LocalDate.now().plusDays(1);
+        for (int dia = 0; dia < 5; dia++) {
+            LocalDate data = primeiroDia.plusDays(dia);
+            for (int hora : List.of(9, 10, 11, 14, 15, 16)) {
+                horarios.save(Horario.builder()
+                        .profissional(profissional)
+                        .data(data)
+                        .horaInicio(LocalTime.of(hora, 0))
+                        .horaFim(LocalTime.of(hora + 1, 0))
+                        .build());
+            }
+        }
     }
 
     private Usuario criarUsuarioSeAusente(

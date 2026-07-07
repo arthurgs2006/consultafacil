@@ -23,7 +23,7 @@ function AppContent() {
   const handleLogout = () => { logout(); setScreen('home') }
 
   if (screen === 'login') {
-    return <AuthPhone onLogin={setScreen} />
+    return <AuthPhone onLogin={setScreen} onBack={() => setScreen('home')} />
   }
 
   return (

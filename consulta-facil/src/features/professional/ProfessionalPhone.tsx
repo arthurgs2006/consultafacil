@@ -1,4 +1,4 @@
-import { BarChart2, CalendarDays, Search, Settings, Users } from 'lucide-react'
+import { BarChart2, CalendarDays, EyeOff, LayoutList, Search, Settings, Users } from 'lucide-react'
 import { useState } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { BottomNav } from '../../components/BottomNav'
@@ -20,6 +20,8 @@ export function ProfessionalPhone() {
   const [patientFilter, setPatientFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | ''>('')
   const [activeTab, setActiveTab] = useState<'agenda' | 'patients' | 'reports' | 'config'>('agenda')
+  const [compactAgenda, setCompactAgenda] = useState(() => localStorage.getItem('consulta-facil:pref-compact-agenda') === 'true')
+  const [hideBlockedSlots, setHideBlockedSlots] = useState(() => localStorage.getItem('consulta-facil:pref-hide-blocked') === 'true')
   const professional = doctors.find(({ name }) => name === session?.name)
   const professionalId = professional?.id ?? 0
   const slots = availability[professionalId]?.[selectedDate] ?? []
@@ -30,6 +32,17 @@ export function ProfessionalPhone() {
     && (!statusFilter || item.status === statusFilter))
 
   const selectDay = (date: string) => { setSelectedDate(date); setDateFilter(date) }
+  const toggleCompactAgenda = () => setCompactAgenda((prev) => {
+    const next = !prev
+    localStorage.setItem('consulta-facil:pref-compact-agenda', String(next))
+    return next
+  })
+  const toggleHideBlockedSlots = () => setHideBlockedSlots((prev) => {
+    const next = !prev
+    localStorage.setItem('consulta-facil:pref-hide-blocked', String(next))
+    return next
+  })
+  const visibleSlots = hideBlockedSlots ? ALL_SLOTS.filter((slot) => slots.includes(slot)) : ALL_SLOTS
 
   const agendaPane = (
     <>
@@ -38,7 +51,8 @@ export function ProfessionalPhone() {
       <section className="card availability">
         <header><strong>Horários em <em>{formatDate(selectedDate)}</em></strong><small>Toque para ativar/desativar</small></header>
         <div className="slot-grid">
-          {ALL_SLOTS.map((slot) => {
+          {visibleSlots.length === 0 && <p className="empty-message">Nenhum horário disponível neste dia.</p>}
+          {visibleSlots.map((slot) => {
             const enabled = slots.includes(slot)
             return (
               <button
@@ -76,7 +90,7 @@ export function ProfessionalPhone() {
           </select>
         </div>
         {items.length === 0 ? <p className="empty-message">Nenhuma consulta encontrada.</p> : items.map((item) => (
-          <article className="professional-appointment" key={item.id}>
+          <article className={`professional-appointment ${compactAgenda ? 'professional-appointment--compact' : ''}`} key={item.id}>
             <div><strong>{item.patient}</strong><small>{formatDate(item.date)} às {item.time}</small></div>
             <StatusBadge status={item.status} />
             {item.status === 'scheduled' && <button type="button" onClick={() => void (async () => { const error = await completeAppointment(item.id); notify(error ?? 'Consulta marcada como concluída.') })()}>Concluir</button>}
@@ -107,7 +121,34 @@ export function ProfessionalPhone() {
   )
 
   const configPane = (
-    <section className="professional-appointments"><div className="section-heading"><h2 className="section-title">Configuração</h2></div><p>Configurações ainda não disponíveis nesta versão.</p><button className="button button--primary" type="button" onClick={() => notify('Configurações ainda não estão disponíveis nesta versão.')}>Verificar opções</button></section>
+    <section className="professional-appointments">
+      <div className="section-heading"><h2 className="section-title">Configuração</h2></div>
+
+      <article className="settings-profile">
+        <Avatar initials={professional?.initials ?? 'PR'} color="blue" size="large" />
+        <div>
+          <strong>{session?.name}</strong>
+          <small>{professional?.specialty}{professional?.registration ? ` · ${professional.registration}` : ''}</small>
+        </div>
+      </article>
+
+      <div className="settings-group">
+        <h3>Preferências</h3>
+        <label className="settings-toggle">
+          <span><LayoutList /> Modo compacto na agenda</span>
+          <input type="checkbox" checked={compactAgenda} onChange={toggleCompactAgenda} aria-label="Ativar modo compacto na agenda" />
+        </label>
+        <label className="settings-toggle">
+          <span><EyeOff /> Ocultar horários bloqueados na grade</span>
+          <input type="checkbox" checked={hideBlockedSlots} onChange={toggleHideBlockedSlots} aria-label="Ocultar horários bloqueados na grade" />
+        </label>
+      </div>
+
+      <div className="settings-group">
+        <h3>Sobre</h3>
+        <p className="settings-about">ConsultaFácil — agendamento de consultas para pacientes e profissionais de saúde. As preferências acima ficam salvas neste dispositivo.</p>
+      </div>
+    </section>
   )
 
   return (

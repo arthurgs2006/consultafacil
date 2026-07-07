@@ -37,8 +37,15 @@ No backend, configure `CORS_ALLOWED_ORIGINS` com as origens permitidas, separada
 Todas usam a senha `12345678`:
 
 - Paciente: `maria@consultafacil.com`
-- Profissional: `ana@consultafacil.com`
 - Administrador: `admin@consultafacil.com`
+- Profissionais:
+  - `ana@consultafacil.com` — Dra. Ana Souza, Cardiologia
+  - `carlos@consultafacil.com` — Dr. Carlos Lima, Neurologia
+  - `beatriz@consultafacil.com` — Dra. Beatriz Oliveira, Odontologia
+  - `juliana@consultafacil.com` — Dra. Juliana Martins, Psicologia
+  - `rafael@consultafacil.com` — Dr. Rafael Costa, Fisioterapia
+
+Cada profissional já entra com horários livres pré-cadastrados nos próximos 5 dias (09h, 10h, 11h, 14h, 15h, 16h).
 
 ## Verificações
 

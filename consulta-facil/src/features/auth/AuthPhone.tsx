@@ -1,12 +1,13 @@
-import { AlertCircle, ArrowLeft, CalendarHeart, Lock, LogIn, Mail } from 'lucide-react'
+import { AlertCircle, ArrowLeft, CalendarHeart, Eye, EyeOff, Lock, LogIn, Mail } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useApp } from '../../context/AppContext'
 import type { Role } from '../../types'
 
-export function AuthPhone({ onLogin }: { onLogin: (role: Role) => void }) {
+export function AuthPhone({ onLogin, onBack }: { onLogin: (role: Role) => void; onBack: () => void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login')
-  const [email, setEmail] = useState('maria@consultafacil.com')
-  const [password, setPassword] = useState('12345678')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [name, setName] = useState('')
   const [registerEmail, setRegisterEmail] = useState('')
   const [registerPassword, setRegisterPassword] = useState('')
@@ -30,6 +31,9 @@ export function AuthPhone({ onLogin }: { onLogin: (role: Role) => void }) {
       {mode === 'login' ? (
         <>
           <header className="gradient-hero auth__hero">
+            <button type="button" className="back-button" onClick={onBack}>
+              <ArrowLeft />Voltar
+            </button>
             <CalendarHeart className="auth__logo" />
             <h2>Bem-vindo ao<br />ConsultaFácil</h2>
             <p>Agende consultas com profissionais de saúde</p>
@@ -38,13 +42,18 @@ export function AuthPhone({ onLogin }: { onLogin: (role: Role) => void }) {
             <h3>Entrar na conta</h3>
             <label>
               E-mail
-              <div className="input-icon"><Mail /><input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} /></div>
+              <div className="input-icon"><Mail /><input required type="email" autoComplete="email" placeholder="seu@email.com" value={email} onChange={(event) => setEmail(event.target.value)} /></div>
             </label>
             <label>
               Senha
-              <div className="input-icon"><Lock /><input required minLength={8} type="password" value={password} onChange={(event) => setPassword(event.target.value)} /></div>
+              <div className="input-icon input-icon--password">
+                <Lock />
+                <input required minLength={8} type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Sua senha" value={password} onChange={(event) => setPassword(event.target.value)} />
+                <button type="button" className="input-icon__toggle" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
             </label>
-            <p className="auth__hint">Contas demo: maria@consultafacil.com, ana@consultafacil.com ou admin@consultafacil.com. Senha: 12345678.</p>
             {error && <div className="error-note"><AlertCircle />{error}</div>}
             <button disabled={submitting} className="button button--primary button--wide">
               <LogIn />{submitting ? 'Entrando...' : 'Entrar'}
@@ -61,7 +70,6 @@ export function AuthPhone({ onLogin }: { onLogin: (role: Role) => void }) {
               <ArrowLeft />Voltar
             </button>
             <h2>Criar conta</h2>
-            <p>O cadastro será salvo no backend</p>
           </header>
           <form className="auth__body" onSubmit={submitRegister}>
             <label>Nome completo<input required value={name} onChange={(event) => setName(event.target.value)} /></label>

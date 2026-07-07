@@ -77,11 +77,15 @@ export function PatientPhone() {
       )}
       {profileOpen && (
         <div className="overlay overlay--center">
-          <section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title">
-            <h3 id="profile-title">Perfil</h3>
-            <p><strong>{session?.name}</strong></p>
-            <p>{session?.role === 'patient' ? 'Paciente' : session?.role}</p>
-            <button className="button button--primary" type="button" onClick={() => setProfileOpen(false)}>Fechar</button>
+          <section className="confirm-dialog profile-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+            <Avatar initials={(session?.name ?? 'Paciente').split(' ').map((part) => part[0]).slice(0, 2).join('')} size="large" />
+            <h3 id="profile-title">{session?.name}</h3>
+            <span className="profile-role">Paciente</span>
+            <div className="profile-stats">
+              <div><strong>{appointments.filter(({ status }) => status === 'scheduled').length}</strong><small>Agendadas</small></div>
+              <div><strong>{appointments.filter(({ status }) => status === 'completed').length}</strong><small>Concluídas</small></div>
+            </div>
+            <button className="button button--primary button--wide" type="button" onClick={() => setProfileOpen(false)}>Fechar</button>
           </section>
         </div>
       )}

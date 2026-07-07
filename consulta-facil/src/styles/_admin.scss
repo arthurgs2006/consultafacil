@@ -7,34 +7,37 @@
   border-bottom: 1px solid #f1f5f9;
   padding: 16px 16px 13px;
   padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  padding-right: 64px;
   background: white;
 
   > div { display: flex; flex-direction: column; }
-  small { color: $muted; font-size: 10px; }
+  small { color: $muted; font-size: 12px; }
   strong { margin-top: 2px; font-size: 15px; }
   > span { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: white; background: linear-gradient(135deg,#f43f5e,#fb923c); svg { width: 20px; } }
 }
 
 .admin-content { padding: 15px 15px 80px; }
 
-.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; > div { display: flex; flex-direction: column; align-items: center; border-radius: 15px; padding: 13px 5px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); &:nth-child(1) strong { color: $primary; } &:nth-child(2) strong { color: #2563eb; } &:nth-child(3) strong { color: #ef4444; } } strong { font-size: 22px; } small { margin-top: 3px; color: $muted; font-size: 9px; } }
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; > div { display: flex; flex-direction: column; align-items: center; border-radius: 15px; padding: 13px 5px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); &:nth-child(1) strong { color: $primary; } &:nth-child(2) strong { color: #2563eb; } &:nth-child(3) strong { color: #ef4444; } } strong { font-size: 22px; } small { margin-top: 3px; color: $muted; font-size: 11px; } }
 
-.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; button { display: flex; align-items: flex-start; flex-direction: column; border-radius: 16px; padding: 14px; color: white; text-align: left; background: $primary; min-height: 80px; &:last-child { background: #2563eb; } svg { width: 19px; } strong { margin-top: 7px; font-size: 11px; } small { margin-top: 2px; opacity: .72; font-size: 8px; } } }
+.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; button { display: flex; align-items: flex-start; flex-direction: column; border-radius: 16px; padding: 14px; color: white; text-align: left; background: $primary; min-height: 80px; &:last-child { background: #2563eb; } svg { width: 19px; } strong { margin-top: 7px; font-size: 13px; } small { margin-top: 2px; opacity: .72; font-size: 10px; } } }
 
 .admin-content .section-heading { .button { padding: 6px 9px; } }
 
-.professional-form { display: flex; flex-direction: column; gap: 8px; h3 { font-size: 12px; } label { color: $muted; font-size: 10px; font-weight: 700; } input { margin-top: 4px; padding: 9px; font-size: 11px; } > div { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; } }
+.professional-form { display: flex; flex-direction: column; gap: 8px; h3 { font-size: 14px; } label { color: $muted; font-size: 12px; font-weight: 700; } input { margin-top: 4px; padding: 9px; font-size: 13px; } > div { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; } }
 
-.admin-doctors { margin-top: 10px; > article { display: flex; align-items: center; gap: 9px; margin-top: 7px; border-radius: 12px; padding: 9px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.04); > div { display: flex; min-width: 0; flex: 1; flex-direction: column; } strong { overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; } small { margin-top: 2px; color: $muted; font-size: 9px; } > button { color: $danger; background: none; font-size: 9px; font-weight: 700; min-height: 44px; } } }
+.admin-doctors { margin-top: 10px; > article { display: flex; align-items: center; gap: 9px; margin-top: 7px; border-radius: 12px; padding: 9px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.04); > div { display: flex; min-width: 0; flex: 1; flex-direction: column; } strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; } small { margin-top: 2px; color: $muted; font-size: 11px; } > button { color: $danger; background: none; font-size: 11px; font-weight: 700; min-height: 44px; } } }
 
-.professional-status { align-self: flex-start; margin-top: 4px; border-radius: 99px; padding: 2px 6px; font-size: 8px; font-weight: 700; &--active { color: #15803d; background: #f0fdf4; } &--inactive { color: #64748b; background: #f1f5f9; } }
+.professional-status { align-self: flex-start; margin-top: 4px; border-radius: 99px; padding: 3px 8px; font-size: 10px; font-weight: 700; &--active { color: #15803d; background: #f0fdf4; } &--inactive { color: #64748b; background: #f1f5f9; } }
 
 .admin-appointments { margin-top: 17px; > .section-title { margin-bottom: 10px; } .filters { select { flex: 1; } .button { padding: 4px 9px; } } }
 
-.admin-appointment { display: flex; align-items: flex-start; justify-content: space-between; margin-top: 8px; border-radius: 15px; padding: 11px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); > div { display: flex; flex-direction: column; } strong { font-size: 11px; } em { margin-top: 2px; color: $primary; font-size: 9px; font-style: normal; font-weight: 600; } small { margin-top: 2px; color: #94a3b8; font-size: 9px; } button { align-self: flex-start; margin-top: 6px; padding: 0; color: $danger; background: none; font-size: 9px; font-weight: 700; min-height: 44px; } }
+.admin-appointment { display: flex; align-items: flex-start; justify-content: space-between; margin-top: 8px; border-radius: 15px; padding: 11px; background: white; box-shadow: 0 1px 4px rgba(0,0,0,.05); > div { display: flex; flex-direction: column; } strong { font-size: 13px; } em { margin-top: 2px; color: $primary; font-size: 11px; font-style: normal; font-weight: 600; } small { margin-top: 2px; color: #94a3b8; font-size: 11px; } button { align-self: flex-start; margin-top: 6px; padding: 0; color: $danger; background: none; font-size: 11px; font-weight: 700; min-height: 44px; } }
+
+.admin-appointment--compact { margin-top: 5px; padding: 8px 10px; strong { font-size: 11px; } em, small { font-size: 9px; } }
 
 @media (min-width: 768px) {
-  .admin-header { padding: 18px clamp(30px, 5vw, 70px); }
+  .admin-header { padding: 18px clamp(30px, 5vw, 70px); padding-right: clamp(60px, 6vw, 90px); }
   .admin-content { width: min(1180px, calc(100% - 80px)); margin: 0 auto; padding: 30px 0 70px; }
   .stats { gap: 18px; }
   .stats > div { padding: 22px; }

@@ -1,4 +1,4 @@
-import { BarChart2, FileBarChart, LayoutDashboard, Plus, Settings, Shield, UserPlus, Users } from 'lucide-react'
+import { BarChart2, EyeOff, FileBarChart, LayoutDashboard, LayoutList, Plus, Settings, Shield, UserPlus, Users } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { BottomNav } from '../../components/BottomNav'
@@ -7,7 +7,7 @@ import { useApp } from '../../context/AppContext'
 import { formatDate } from '../../utils/date'
 
 export function AdminPhone() {
-  const { doctors, appointments, addDoctor, deleteDoctor, cancelAppointment, notify } = useApp()
+  const { session, doctors, appointments, addDoctor, deleteDoctor, cancelAppointment, notify } = useApp()
   const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'reports' | 'config'>('dashboard')
   const [formOpen, setFormOpen] = useState(false)
   const [name, setName] = useState('')
@@ -18,9 +18,23 @@ export function AdminPhone() {
   const [dateFilter, setDateFilter] = useState('')
   const [doctorFilter, setDoctorFilter] = useState('')
   const [deleteId, setDeleteId] = useState<number | null>(null)
+  const [compactAppointments, setCompactAppointments] = useState(() => localStorage.getItem('consulta-facil:pref-compact-admin') === 'true')
+  const [hideInactiveDoctors, setHideInactiveDoctors] = useState(() => localStorage.getItem('consulta-facil:pref-hide-inactive') === 'true')
 
   const filtered = appointments.filter((item) => (!dateFilter || item.date === dateFilter) && (!doctorFilter || item.doctorId === Number(doctorFilter)))
   const deleteTarget = doctors.find(({ id }) => id === deleteId)
+  const visibleDoctors = hideInactiveDoctors ? doctors.filter(({ status }) => status === 'active') : doctors
+
+  const toggleCompactAppointments = () => setCompactAppointments((prev) => {
+    const next = !prev
+    localStorage.setItem('consulta-facil:pref-compact-admin', String(next))
+    return next
+  })
+  const toggleHideInactiveDoctors = () => setHideInactiveDoctors((prev) => {
+    const next = !prev
+    localStorage.setItem('consulta-facil:pref-hide-inactive', String(next))
+    return next
+  })
 
   const submit = async (event: FormEvent) => {
     event.preventDefault()
@@ -81,7 +95,7 @@ export function AdminPhone() {
           filtered.map((item) => {
             const doctor = doctors.find(({ id }) => id === item.doctorId)
             return (
-              <article className="admin-appointment" key={item.id}>
+              <article className={`admin-appointment ${compactAppointments ? 'admin-appointment--compact' : ''}`} key={item.id}>
                 <div>
                   <strong>{item.patient}</strong>
                   <em>{doctor?.name ?? 'Profissional removido'}</em>
@@ -122,7 +136,8 @@ export function AdminPhone() {
           </div>
         </form>
       )}
-      {doctors.map((doctor) => (
+      {visibleDoctors.length === 0 && <p className="empty-message">Nenhum profissional encontrado.</p>}
+      {visibleDoctors.map((doctor) => (
         <article key={doctor.id}>
           <Avatar initials={doctor.initials} color={doctor.color} size="small" />
           <div>
@@ -151,8 +166,31 @@ export function AdminPhone() {
   const configPane = (
     <section className="admin-appointments">
       <h2 className="section-title">Configuração</h2>
-      <p>Use esta área para revisar integrações, permissões e regras de negócio.</p>
-      <button className="button button--primary" type="button" onClick={() => notify('Configurações ainda não estão disponíveis nesta versão.')}>Ver configurações</button>
+
+      <article className="settings-profile">
+        <Avatar initials={(session?.name ?? 'Admin').split(' ').map((part) => part[0]).slice(0, 2).join('').toUpperCase()} color="rose" size="large" />
+        <div>
+          <strong>{session?.name}</strong>
+          <small>Administrador da plataforma</small>
+        </div>
+      </article>
+
+      <div className="settings-group">
+        <h3>Preferências</h3>
+        <label className="settings-toggle">
+          <span><LayoutList /> Modo compacto nos agendamentos</span>
+          <input type="checkbox" checked={compactAppointments} onChange={toggleCompactAppointments} aria-label="Ativar modo compacto nos agendamentos" />
+        </label>
+        <label className="settings-toggle">
+          <span><EyeOff /> Ocultar profissionais inativos na listagem</span>
+          <input type="checkbox" checked={hideInactiveDoctors} onChange={toggleHideInactiveDoctors} aria-label="Ocultar profissionais inativos na listagem" />
+        </label>
+      </div>
+
+      <div className="settings-group">
+        <h3>Sobre</h3>
+        <p className="settings-about">ConsultaFácil — painel administrativo para supervisionar profissionais e agendamentos da plataforma. As preferências acima ficam salvas neste dispositivo.</p>
+      </div>
     </section>
   )
 
